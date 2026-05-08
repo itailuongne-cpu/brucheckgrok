@@ -63,7 +63,7 @@
             const cacDong = noiDung.split('\n');
 
             for (let dong of cacDong) {
-                if (dong.includes('Something went wrong') || dong.includes('This model is overloaded')) {
+                if (dong.includes('Something went wrong') || dong.includes('This model is overloaded') || dong.includes('unable to process')) {
                     input.value = '';
                     output.style.display = 'none';
                     output.textContent = '';
