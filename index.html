@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Grok</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            background: #ff4c88;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+        button:hover {
+            background: #ff4c88;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            min-height: 50px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Check Grok</h2>
+    <textarea id="inputBox" placeholder="Nhập nội dung..."></textarea>
+    <button onclick="kiemTraNoiDung()">Check</button>
+    <div id="output"></div>
+
+    <script>
+        function kiemTraNoiDung() {
+            const input = document.getElementById('inputBox');
+            const output = document.getElementById('output');
+            const noiDung = input.value;
+            const cacDong = noiDung.split('\n');
+
+            for (let dong of cacDong) {
+                if (dong.includes('Something went wrong') || dong.includes('This model is overloaded')) {
+                    input.value = '';
+                    output.style.display = 'none';
+                    output.textContent = '';
+                    return;
+                }
+            }
+
+            output.textContent = noiDung;
+            output.style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
