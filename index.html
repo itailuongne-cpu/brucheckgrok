@@ -46,6 +46,20 @@
             min-height: 50px;
             display: none;
         }
+        #extraButton {
+            display: none;          
+            margin-top: 10px;
+            background: #ff4c88;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+        #extraButton:hover {
+            background: #ff4c88;
+        }
     </style>
 </head>
 <body>
@@ -54,25 +68,34 @@
     <textarea id="inputBox" placeholder="Nhập nội dung..."></textarea>
     <button onclick="kiemTraNoiDung()">Check</button>
     <div id="output"></div>
+    <button id="extraButton" onclick="alert('Nek nek!')">Nek Nek</button>
 
     <script>
         function kiemTraNoiDung() {
             const input = document.getElementById('inputBox');
             const output = document.getElementById('output');
+            const extraBtn = document.getElementById('extraButton');
             const noiDung = input.value;
             const cacDong = noiDung.split('\n');
 
+            // Kiểm tra lỗi
             for (let dong of cacDong) {
-                if (dong.includes('Something went wrong') || dong.includes('This model is overloaded') || dong.includes('unable to process')) {
+                if (dong.includes('Something went wrong') || 
+                    dong.includes('This model is overloaded') || 
+                    dong.includes('unable to process')) {
+                    // Nếu phát hiện lỗi: xoá input, ẩn output, ẩn nút hồng
                     input.value = '';
                     output.style.display = 'none';
                     output.textContent = '';
+                    extraBtn.style.display = 'none';
                     return;
                 }
             }
 
+            // Không có lỗi: hiện nội dung và nút hồng
             output.textContent = noiDung;
             output.style.display = 'block';
+            extraBtn.style.display = 'block';
         }
     </script>
 
