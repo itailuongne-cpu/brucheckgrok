@@ -33,7 +33,7 @@
             width: 100%;
         }
         button:hover {
-            background: #ff4c88;
+            background: #e0437a;
         }
         #output {
             margin-top: 20px;
@@ -46,20 +46,6 @@
             min-height: 50px;
             display: none;
         }
-        #extraButton {
-            display: none;          
-            margin-top: 10px;
-            background: #ff4c88;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            width: 100%;
-        }
-        #extraButton:hover {
-            background: #ff4c88;
-        }
     </style>
 </head>
 <body>
@@ -68,34 +54,59 @@
     <textarea id="inputBox" placeholder="Nhập nội dung..."></textarea>
     <button onclick="kiemTraNoiDung()">Check</button>
     <div id="output"></div>
-    <button id="extraButton" onclick="alert('Nek nek!')">Nek Nek</button>
 
     <script>
+        let extraBtn = null;
+
+        function taoNutHong() {
+            const btn = document.createElement('button');
+            btn.textContent = 'Nek nek!';
+            btn.style.display = 'block';
+            btn.style.marginTop = '10px';
+            btn.style.padding = '10px 20px';
+            btn.style.fontSize = '14px';
+            btn.style.cursor = 'pointer';
+            btn.style.background = '#ff4c88';
+            btn.style.color = 'white';
+            btn.style.border = 'none';
+            btn.style.borderRadius = '5px';
+            btn.style.width = '100%';
+            btn.addEventListener('mouseenter', () => btn.style.background = '#e0437a');
+            btn.addEventListener('mouseleave', () => btn.style.background = '#ff4c88');
+            btn.addEventListener('click', () => alert('Nek nek!'));
+            return btn;
+        }
+
         function kiemTraNoiDung() {
             const input = document.getElementById('inputBox');
             const output = document.getElementById('output');
-            const extraBtn = document.getElementById('extraButton');
             const noiDung = input.value;
             const cacDong = noiDung.split('\n');
 
-            // Kiểm tra lỗi
             for (let dong of cacDong) {
                 if (dong.includes('Something went wrong') || 
                     dong.includes('This model is overloaded') || 
                     dong.includes('unable to process')) {
-                    // Nếu phát hiện lỗi: xoá input, ẩn output, ẩn nút hồng
+                    
                     input.value = '';
                     output.style.display = 'none';
                     output.textContent = '';
-                    extraBtn.style.display = 'none';
+
+                    if (extraBtn) {
+                        extraBtn.remove();
+                        extraBtn = null;
+                    }
                     return;
                 }
             }
 
-            // Không có lỗi: hiện nội dung và nút hồng
             output.textContent = noiDung;
             output.style.display = 'block';
-            extraBtn.style.display = 'block';
+
+            if (!extraBtn) {
+                extraBtn = taoNutHong();
+                output.parentNode.insertBefore(extraBtn, output.nextSibling);
+            }
         }
     </script>
 
